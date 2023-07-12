@@ -3,10 +3,8 @@
 # Evan Davies
 
 # TO-DO LIST #
-# - Finish scorecard
-# - Save scores permanently
-# - Clear scores file at start of each game
 # - Scorecards should display a number if 2 or more people have the same name abbreviation.
+# - Permanent score storage
 
 # Updated Jul 10, 2023:
 # NEW #
@@ -14,17 +12,15 @@
 # - Added player scores at the end of each round
 # ADJUSTMENTS #
 # Turn number calculator is now much simpler.
-# WIP #
-# - Scorecards
-# - Score storage
 
 # Updated Jul 12, 2023:
 # FIXES #
 # Fixed player scores after each round not displaying player names correctly in some cases.
 # NEW #
 # - Now using pyautogui. Currently just used to clear the run window after each round.
-# - Scorecard now displays player names (mostly) correctly
+# - Scorecard complete!
 # - scores.dat now clears before each game
+# - Created a GitHub repository for the project
 
 
 
@@ -40,10 +36,24 @@ def showScorecard():
         pNameList += f"{pNamesAbbr[num]:>3}|"
     pNameList += (6 - numPlayers) * "   |"
     print(pNameList)
+    print("|———————————————————————————|")
     s = open("scores.dat", "r")
     scores = s.readlines()
+    turnNum = 1
     for score in scores:
-        print(score.strip())
+        splitScores = score.split(",")
+        scoreRow = "|"
+        if turnNum <= 9:
+            scoreRow += " "
+        scoreRow += f"T{turnNum}|"
+        for subscore in splitScores:
+            stripped = subscore.strip()
+            scoreRow += f"{stripped:>3s}|"
+        scoreRow += (6 - numPlayers) * "   |"
+        print(scoreRow)
+        turnNum += 1
+    print("|———————————————————————————|")
+
 
 
 
@@ -102,7 +112,7 @@ for player in range(numPlayers):
 
 for turn in range(numTurns):
     # Displaying turn number
-    print(f"Round {turn + 1}")
+    print(f"Round {turn + 1} / {numTurns}")
     print()
     for player in range(numPlayers):
         while True:
@@ -155,7 +165,7 @@ for turn in range(numTurns):
         print(f"{playerNames[i]}: {totalScores[i]}")
     print(f"")
     f = open("scores.dat", "a")
-    totalScoresStr = ", ".join([str(item) for item in totalScores])
+    totalScoresStr = ",".join([str(item) for item in totalScores])
     totalScoresWrite = ""
     if turn != 0:
         totalScoresWrite += "\n"
