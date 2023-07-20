@@ -220,21 +220,21 @@ while True:
     print("2. View past games")
     print("3. Credits")
     print("4. Quit")
-    selection = int(input(">"))
-    if selection != 1 and selection != 2 and selection != 3 and selection != 4:
+    selection = input(">")
+    if int(selection) != 1 and int(selection) != 2 and int(selection) != 3 and int(selection) != 4:
         pyautogui.click(x=828, y=388)
         pyautogui.hotkey('shift', 'command', 'p')
         print("Invalid selection")
         print()
-    elif selection == 1:
+    elif int(selection) == 1:
         pyautogui.click(x=828, y=388)
         pyautogui.hotkey('shift', 'command', 'p')
         playGame()
-    elif selection == 2:
+    elif int(selection) == 2:
         pyautogui.click(x=828, y=388)
         pyautogui.hotkey('shift', 'command', 'p')
         print(f"Nothing here yet! ({selection})")
-    elif selection == 3:
+    elif int(selection) == 3:
         pyautogui.click(x=828, y=388)
         pyautogui.hotkey('shift', 'command', 'p')
         print(f"Nothing here yet! ({selection})")
